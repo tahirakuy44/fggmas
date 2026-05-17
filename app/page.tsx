@@ -218,14 +218,23 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
       
       updateTimer();
       const interval = setInterval(updateTimer, 1000);
-      return () => clearInterval(interval);
+      
+      // Auto-refresh inbox every 10 seconds (silent mode)
+      const refreshInterval = setInterval(() => {
+        fetchInbox(credentials.email, credentials.password, true);
+      }, 10000);
+
+      return () => {
+        clearInterval(interval);
+        clearInterval(refreshInterval);
+      };
     }
   }, [credentials]);
 
-  const fetchInbox = async (fetchEmail: string, fetchPass: string) => {
+  const fetchInbox = async (fetchEmail: string, fetchPass: string, isSilent: boolean = false) => {
     if (!fetchEmail || !fetchPass) return;
     
-    setStatus({ loading: true, error: '', success: '' });
+    if (!isSilent) setStatus({ loading: true, error: '', success: '' });
     
     try {
       const res = await fetch('/api/email/inbox', {
@@ -239,11 +248,12 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
       if (!res.ok) throw new Error(data.error || 'Failed to fetch inbox');
 
       setEmails(data.emails || []);
-      setStatus({ loading: false, error: '', success: 'Inbox refreshed!' });
-      
-      setTimeout(() => setStatus(s => ({ ...s, success: '' })), 3000);
+      if (!isSilent) {
+        setStatus({ loading: false, error: '', success: 'Inbox refreshed!' });
+        setTimeout(() => setStatus(s => ({ ...s, success: '' })), 3000);
+      }
     } catch (err: any) {
-      setStatus({ loading: false, error: err.message, success: '' });
+      if (!isSilent) setStatus({ loading: false, error: err.message, success: '' });
     }
   };
 
@@ -267,7 +277,7 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
 
       if (!res.ok) throw new Error(data.error || 'Failed to delete account');
 
-      setStatus({ loading: false, error: '', success: autoExpired ? 'Account expired and was auto-deleted!' : 'Account deleted successfully!' });
+      setStatus({ loading: false, error: '', success: '' });
       setEmails([]);
       setEmail('');
       setPassword('');
@@ -284,7 +294,7 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
     return `${m}:${s}`;
   };
 
-  if (!credentials && !email) {
+  if (!email) {
     return (
       <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1' }}>
         <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#94a3b8' }}><i className="fa-solid fa-inbox"></i></div>
