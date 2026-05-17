@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 
     const emailAccounts = listData.data || [];
     const now = Date.now();
-    const tenMinutesInMs = 10 * 60 * 1000;
+    const timeLimitInMs = 5 * 60 * 1000;
     
     let deletedCount = 0;
 
@@ -42,8 +42,8 @@ export async function POST(req: Request) {
       if (match) {
         const timestamp = parseInt(match[1], 10);
         
-        // If the email is older than 10 minutes, delete it
-        if (now - timestamp > tenMinutesInMs) {
+        // If the email is older than 5 minutes, delete it
+        if (now - timestamp > timeLimitInMs) {
           const emailPrefix = username.split('@')[0];
           
           const deleteUrl = `${cpanelHost}/execute/Email/delete_pop?email=${encodeURIComponent(emailPrefix)}&domain=${encodeURIComponent(domainName)}`;

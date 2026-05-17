@@ -31,7 +31,7 @@ export default function Home() {
             href="https://ais-pre-2qhdmsbs7fyvvwuto2ee2y-63035386885.asia-east1.run.app" 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#ef4444', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(239, 68, 68, 0.3)' }}
+            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.3)' }}
             onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
             onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
@@ -44,7 +44,7 @@ export default function Home() {
             href="https://ais-pre-fl4ck7s22gpwguilccyvgq-63035386885.asia-east1.run.app" 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#8b5cf6', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(139, 92, 246, 0.3)' }}
+            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.3)' }}
             onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
             onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
@@ -64,7 +64,7 @@ export default function Home() {
             href="https://fal.ai/explore" 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#f97316', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(249, 115, 22, 0.3)' }}
+            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.3)' }}
             onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
             onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
@@ -101,7 +101,10 @@ export default function Home() {
             {activeTab === 'create' ? (
               <CreateEmailForm onSuccess={handleEmailCreated} />
             ) : (
-              <InboxViewer credentials={activeTab === 'inbox' ? autoLoginCredentials : null} />
+              <InboxViewer 
+                credentials={activeTab === 'inbox' ? autoLoginCredentials : null} 
+                onClearCredentials={() => setAutoLoginCredentials(null)}
+              />
             )}
           </div>
         </main>
@@ -179,9 +182,9 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
       <button 
         type="submit" 
         disabled={status.loading || !prefix}
-        style={{ padding: '0.875rem', background: '#2563eb', color: 'white', border: 'none', borderRadius: '8px', fontSize: '1rem', fontWeight: '600', cursor: (status.loading || !prefix) ? 'not-allowed' : 'pointer', marginTop: '0.5rem', transition: 'background 0.2s', boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.2)' }}
-        onMouseOver={(e) => (!status.loading && prefix) && (e.currentTarget.style.background = '#1d4ed8')}
-        onMouseOut={(e) => e.currentTarget.style.background = '#2563eb'}
+        style={{ padding: '0.875rem', background: '#0f172a', color: 'white', border: 'none', borderRadius: '8px', fontSize: '1rem', fontWeight: '600', cursor: (status.loading || !prefix) ? 'not-allowed' : 'pointer', marginTop: '0.5rem', transition: 'background 0.2s', boxShadow: '0 4px 6px -1px rgba(15, 23, 42, 0.2)' }}
+        onMouseOver={(e) => (!status.loading && prefix) && (e.currentTarget.style.background = '#1e293b')}
+        onMouseOut={(e) => e.currentTarget.style.background = '#0f172a'}
       >
         {status.loading ? 'Creating Secure Account...' : 'Generate Auto-Destruct Email'}
       </button>
@@ -192,15 +195,17 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
   );
 }
 
-function InboxViewer({ credentials }: { credentials: {email: string, password: string, createdAt: number} | null }) {
+function InboxViewer({ credentials, onClearCredentials }: { credentials: {email: string, password: string, createdAt: number} | null, onClearCredentials: () => void }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState({ loading: false, error: '', success: '' });
   const [emails, setEmails] = useState<any[]>([]);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const previousEmailCount = React.useRef(0);
 
   useEffect(() => {
     if (credentials) {
+      previousEmailCount.current = 0;
       setEmail(credentials.email);
       setPassword(credentials.password);
       fetchInbox(credentials.email, credentials.password);
@@ -208,7 +213,7 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
       // Countdown Timer Logic
       const updateTimer = () => {
         const elapsed = Date.now() - credentials.createdAt;
-        const remaining = Math.max(0, (10 * 60 * 1000) - elapsed);
+        const remaining = Math.max(0, (5 * 60 * 1000) - elapsed);
         setTimeLeft(Math.floor(remaining / 1000));
         
         if (remaining <= 0) {
@@ -247,7 +252,13 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
 
       if (!res.ok) throw new Error(data.error || 'Failed to fetch inbox');
 
-      setEmails(data.emails || []);
+      const fetchedEmails = data.emails || [];
+      if (fetchedEmails.length > previousEmailCount.current) {
+        playSound('new-email');
+      }
+      previousEmailCount.current = fetchedEmails.length;
+
+      setEmails(fetchedEmails);
       if (!isSilent) {
         setStatus({ loading: false, error: '', success: 'Inbox refreshed!' });
         setTimeout(() => setStatus(s => ({ ...s, success: '' })), 3000);
@@ -277,11 +288,13 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
 
       if (!res.ok) throw new Error(data.error || 'Failed to delete account');
 
+      playSound('delete');
       setStatus({ loading: false, error: '', success: '' });
       setEmails([]);
       setEmail('');
       setPassword('');
       setTimeLeft(null);
+      onClearCredentials();
       
     } catch (err: any) {
       setStatus({ loading: false, error: err.message, success: '' });
@@ -309,7 +322,33 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h2 style={{ marginTop: 0, marginBottom: '0.25rem', fontSize: '1.5rem', color: '#1e293b' }}>Secure Inbox</h2>
-          <p style={{ margin: 0, color: '#2563eb', fontSize: '0.95rem', fontWeight: 600 }}>{email}</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <p style={{ margin: 0, color: '#2563eb', fontSize: '1.05rem', fontWeight: 600 }}>{email}</p>
+            <button 
+              onClick={() => {
+                navigator.clipboard.writeText(email);
+                const btn = document.getElementById('copy-email-btn');
+                if (btn) {
+                  const originalHtml = btn.innerHTML;
+                  btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                  btn.style.background = '#10b981';
+                  btn.style.color = 'white';
+                  setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.style.background = '#e0e7ff';
+                    btn.style.color = '#4f46e5';
+                  }, 2000);
+                }
+              }}
+              id="copy-email-btn"
+              title="Copy email address"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.25rem 0.6rem', background: '#0f172a', color: 'white', border: 'none', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
+              onMouseOver={(e) => { if (e.currentTarget.style.background === 'rgb(15, 23, 42)') e.currentTarget.style.background = '#1e293b'; }}
+              onMouseOut={(e) => { if (e.currentTarget.style.background === 'rgb(30, 41, 59)') e.currentTarget.style.background = '#0f172a'; }}
+            >
+              <i className="fa-regular fa-copy"></i> Copy
+            </button>
+          </div>
         </div>
         
         {timeLeft !== null && (
@@ -323,9 +362,9 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
           <button 
             onClick={() => fetchInbox(email, password)}
             disabled={status.loading || !email || !password}
-            style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0ea5e9', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', fontSize: '0.9rem', cursor: (status.loading || !email || !password) ? 'not-allowed' : 'pointer', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}
-            onMouseOver={(e) => !status.loading && email && password && (e.currentTarget.style.background = '#0284c7')}
-            onMouseOut={(e) => e.currentTarget.style.background = '#0ea5e9'}
+            style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', fontSize: '0.9rem', cursor: (status.loading || !email || !password) ? 'not-allowed' : 'pointer', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(15,23,42,0.05)' }}
+            onMouseOver={(e) => !status.loading && email && password && (e.currentTarget.style.background = '#1e293b')}
+            onMouseOut={(e) => e.currentTarget.style.background = '#0f172a'}
           >
             <span style={{ marginRight: '6px' }}><i className="fa-solid fa-rotate-right"></i></span> Refresh
           </button>
@@ -333,9 +372,9 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
             type="button"
             onClick={() => handleDeleteAccount(email, false)}
             disabled={status.loading || !email}
-            style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#ef4444', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', fontSize: '0.9rem', cursor: (status.loading || !email) ? 'not-allowed' : 'pointer', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}
-            onMouseOver={(e) => !status.loading && email && (e.currentTarget.style.background = '#dc2626')}
-            onMouseOut={(e) => e.currentTarget.style.background = '#ef4444'}
+            style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', fontSize: '0.9rem', cursor: (status.loading || !email) ? 'not-allowed' : 'pointer', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(15,23,42,0.05)' }}
+            onMouseOver={(e) => !status.loading && email && (e.currentTarget.style.background = '#1e293b')}
+            onMouseOut={(e) => e.currentTarget.style.background = '#0f172a'}
           >
             <span style={{ marginRight: '6px' }}><i className="fa-solid fa-trash"></i></span> Delete
           </button>
@@ -363,7 +402,7 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
                 {msg.html ? (
                   <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
                     <iframe 
-                      srcDoc={msg.html} 
+                      srcDoc={`<base target="_blank">${msg.html}`} 
                       style={{ width: '100%', height: '500px', border: 'none', display: 'block' }} 
                       title="Email Content"
                       sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin"
@@ -392,3 +431,37 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
     </div>
   );
 }
+
+const playSound = (type: 'new-email' | 'delete') => {
+  try {
+    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    if (type === 'new-email') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+      osc.frequency.setValueAtTime(880.00, ctx.currentTime + 0.1); 
+      gain.gain.setValueAtTime(0, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    } else if (type === 'delete') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(300, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.2);
+      gain.gain.setValueAtTime(0.8, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.2);
+    }
+  } catch (e) {
+    console.log('Audio error:', e);
+  }
+};
