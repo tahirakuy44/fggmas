@@ -12,44 +12,84 @@ export default function Home() {
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '1rem' }}>Email Accounts Manager</h1>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', color: '#0f172a' }}>
       
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-        <a 
-          href="https://ais-pre-2qhdmsbs7fyvvwuto2ee2y-63035386885.asia-east1.run.app" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1.5rem', background: '#FF0000', color: 'white', textDecoration: 'none', borderRadius: '6px', fontWeight: 'bold', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style={{ width: '20px', height: '20px', marginRight: '8px' }}>
-            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
-          </svg>
-          Download YouTube
-        </a>
-      </div>
-      
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', justifyContent: 'center' }}>
-        <button 
-          onClick={() => setActiveTab('create')}
-          style={{ padding: '0.75rem 1.5rem', background: activeTab === 'create' ? '#0070f3' : '#eaeaea', color: activeTab === 'create' ? 'white' : '#333', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}
-        >
-          Create New Email
-        </button>
-        <button 
-          onClick={() => setActiveTab('inbox')}
-          style={{ padding: '0.75rem 1.5rem', background: activeTab === 'inbox' ? '#0070f3' : '#eaeaea', color: activeTab === 'inbox' ? 'white' : '#333', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}
-        >
-          Check Inbox
-        </button>
-      </div>
+      {/* HEADER */}
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', backgroundColor: 'rgba(255, 255, 255, 0.9)', backdropFilter: 'blur(10px)', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 10, boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ width: '32px', height: '32px', background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1.2rem' }}>@</div>
+          <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, letterSpacing: '-0.025em', color: '#1e293b' }}>LuminagenPro</h1>
+        </div>
+        
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <a 
+            href="https://ais-pre-2qhdmsbs7fyvvwuto2ee2y-63035386885.asia-east1.run.app" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#ef4444', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(239, 68, 68, 0.3)' }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style={{ width: '16px', height: '16px', marginRight: '6px' }}>
+              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+            </svg>
+            Download YouTube
+          </a>
+          <a 
+            href="https://ais-pre-fl4ck7s22gpwguilccyvgq-63035386885.asia-east1.run.app" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#8b5cf6', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(139, 92, 246, 0.3)' }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            <i className="fa-solid fa-scissors" style={{ marginRight: '6px' }}></i> Video Cutter
+          </a>
+          <a 
+            href="https://weave.figma.com/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.3)' }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            <i className="fa-solid fa-clapperboard" style={{ marginRight: '6px' }}></i> Kling Motion
+          </a>
+        </div>
+      </header>
 
-      <div style={{ background: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', border: '1px solid #eaeaea', color: '#333' }}>
-        {activeTab === 'create' ? (
-          <CreateEmailForm onSuccess={handleEmailCreated} />
-        ) : (
-          <InboxViewer credentials={activeTab === 'inbox' ? autoLoginCredentials : null} />
-        )}
+      {/* MAIN BODY */}
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+        
+        {/* SIDEBAR */}
+        <aside style={{ width: '260px', backgroundColor: '#ffffff', borderRight: '1px solid #e2e8f0', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem', paddingLeft: '0.5rem' }}>Menu Utama</div>
+          
+          <button 
+            onClick={() => setActiveTab('create')}
+            style={{ display: 'flex', alignItems: 'center', padding: '0.75rem 1rem', background: activeTab === 'create' ? '#eff6ff' : 'transparent', color: activeTab === 'create' ? '#2563eb' : '#475569', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: activeTab === 'create' ? 600 : 500, fontSize: '0.95rem', textAlign: 'left', transition: 'all 0.2s' }}
+          >
+            <span style={{ marginRight: '10px', fontSize: '1.2rem' }}><i className="fa-solid fa-envelope"></i></span> Create New Email
+          </button>
+          
+          <button 
+            onClick={() => setActiveTab('inbox')}
+            style={{ display: 'flex', alignItems: 'center', padding: '0.75rem 1rem', background: activeTab === 'inbox' ? '#eff6ff' : 'transparent', color: activeTab === 'inbox' ? '#2563eb' : '#475569', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: activeTab === 'inbox' ? 600 : 500, fontSize: '0.95rem', textAlign: 'left', transition: 'all 0.2s' }}
+          >
+            <span style={{ marginRight: '10px', fontSize: '1.2rem' }}><i className="fa-solid fa-inbox"></i></span> Check Inbox
+          </button>
+        </aside>
+
+        {/* CONTENT AREA */}
+        <main style={{ flex: 1, padding: '2rem', overflowY: 'auto' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto', background: '#ffffff', padding: '2.5rem', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)', border: '1px solid #f1f5f9' }}>
+            {activeTab === 'create' ? (
+              <CreateEmailForm onSuccess={handleEmailCreated} />
+            ) : (
+              <InboxViewer credentials={activeTab === 'inbox' ? autoLoginCredentials : null} />
+            )}
+          </div>
+        </main>
       </div>
     </div>
   );
@@ -77,12 +117,11 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
 
       setStatus({ loading: false, error: '', success: `Success! Created ${data.email}` });
       
-      // Trigger the auto-login flow
       setTimeout(() => {
         onSuccess(data.email, password);
         setPrefix('');
         setPassword('');
-      }, 1000); // Slight delay so user can see the success message
+      }, 1000); 
       
     } catch (err: any) {
       setStatus({ loading: false, error: err.message, success: '' });
@@ -90,43 +129,53 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
   };
 
   return (
-    <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <h2 style={{ marginTop: 0 }}>Create Email Account</h2>
+    <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      <div style={{ marginBottom: '0.5rem' }}>
+        <h2 style={{ marginTop: 0, marginBottom: '0.5rem', fontSize: '1.5rem', color: '#1e293b' }}>Create Email Account</h2>
+        <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>Generate a new cPanel email address instantly.</p>
+      </div>
+      
       <div>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Email Prefix</label>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#334155', fontSize: '0.9rem' }}>Email Prefix</label>
+        <div style={{ display: 'flex', alignItems: 'stretch' }}>
           <input 
             type="text" 
             value={prefix} 
             onChange={(e) => setPrefix(e.target.value)} 
-            placeholder="admin"
+            placeholder="e.g. admin"
             required
-            style={{ flex: 1, padding: '0.75rem', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem' }}
+            style={{ flex: 1, padding: '0.75rem 1rem', borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px', border: '1px solid #cbd5e1', borderRight: 'none', fontSize: '1rem', outline: 'none' }}
           />
-          <span style={{ color: '#666' }}>@luminagenpro.my.id</span>
+          <div style={{ display: 'flex', alignItems: 'center', padding: '0 1rem', background: '#f8fafc', border: '1px solid #cbd5e1', borderTopRightRadius: '8px', borderBottomRightRadius: '8px', color: '#64748b', fontWeight: 500 }}>
+            @luminagenpro.my.id
+          </div>
         </div>
       </div>
+      
       <div>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Password</label>
+        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#334155', fontSize: '0.9rem' }}>Password</label>
         <input 
           type="text" 
           value={password} 
           onChange={(e) => setPassword(e.target.value)} 
-          placeholder="Strong password"
+          placeholder="Enter a strong password"
           required
-          style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem', boxSizing: 'border-box' }}
+          style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem', boxSizing: 'border-box', outline: 'none' }}
         />
       </div>
+      
       <button 
         type="submit" 
         disabled={status.loading}
-        style={{ padding: '1rem', background: '#28a745', color: 'white', border: 'none', borderRadius: '6px', fontSize: '1rem', fontWeight: 'bold', cursor: status.loading ? 'wait' : 'pointer', marginTop: '1rem' }}
+        style={{ padding: '0.875rem', background: '#2563eb', color: 'white', border: 'none', borderRadius: '8px', fontSize: '1rem', fontWeight: '600', cursor: status.loading ? 'wait' : 'pointer', marginTop: '0.5rem', transition: 'background 0.2s', boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.2)' }}
+        onMouseOver={(e) => e.currentTarget.style.background = '#1d4ed8'}
+        onMouseOut={(e) => e.currentTarget.style.background = '#2563eb'}
       >
-        {status.loading ? 'Creating...' : 'Create Email'}
+        {status.loading ? 'Creating...' : 'Create Email Account'}
       </button>
 
-      {status.error && <div style={{ color: '#dc3545', padding: '1rem', background: '#f8d7da', borderRadius: '6px', marginTop: '1rem' }}>{status.error}</div>}
-      {status.success && <div style={{ color: '#28a745', padding: '1rem', background: '#d4edda', borderRadius: '6px', marginTop: '1rem' }}>{status.success}</div>}
+      {status.error && <div style={{ color: '#b91c1c', padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', fontSize: '0.95rem' }}>{status.error}</div>}
+      {status.success && <div style={{ color: '#15803d', padding: '1rem', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', fontSize: '0.95rem' }}>{status.success}</div>}
     </form>
   );
 }
@@ -137,12 +186,10 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
   const [status, setStatus] = useState({ loading: false, error: '', success: '' });
   const [emails, setEmails] = useState<any[]>([]);
 
-  // Auto-fill credentials if passed from creation tab
   useEffect(() => {
     if (credentials) {
       setEmail(credentials.email);
       setPassword(credentials.password);
-      // Auto fetch after setting credentials
       fetchInbox(credentials.email, credentials.password);
     }
   }, [credentials]);
@@ -166,7 +213,6 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
       setEmails(data.emails || []);
       setStatus({ loading: false, error: '', success: 'Inbox refreshed!' });
       
-      // Clear success message after 3 seconds
       setTimeout(() => setStatus(s => ({ ...s, success: '' })), 3000);
     } catch (err: any) {
       setStatus({ loading: false, error: err.message, success: '' });
@@ -210,35 +256,42 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h2 style={{ marginTop: 0, marginBottom: 0 }}>Check Inbox</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem' }}>
+        <div>
+          <h2 style={{ marginTop: 0, marginBottom: '0.25rem', fontSize: '1.5rem', color: '#1e293b' }}>Check Inbox</h2>
+          <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>Read and manage emails for your generated accounts.</p>
+        </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <button 
             onClick={() => fetchInbox(email, password)}
             disabled={status.loading || !email || !password}
-            style={{ padding: '0.5rem 1rem', background: '#17a2b8', color: 'white', border: 'none', borderRadius: '4px', cursor: (status.loading || !email || !password) ? 'not-allowed' : 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0ea5e9', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', fontSize: '0.9rem', cursor: (status.loading || !email || !password) ? 'not-allowed' : 'pointer', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}
+            onMouseOver={(e) => !status.loading && email && password && (e.currentTarget.style.background = '#0284c7')}
+            onMouseOut={(e) => e.currentTarget.style.background = '#0ea5e9'}
           >
-            🔄 Refresh Inbox
+            <span style={{ marginRight: '6px' }}><i className="fa-solid fa-rotate-right"></i></span> Refresh
           </button>
           <button 
             type="button"
             onClick={handleDeleteAccount}
             disabled={status.loading || !email}
-            style={{ padding: '0.5rem 1rem', background: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: (status.loading || !email) ? 'not-allowed' : 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#ef4444', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', fontSize: '0.9rem', cursor: (status.loading || !email) ? 'not-allowed' : 'pointer', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}
+            onMouseOver={(e) => !status.loading && email && (e.currentTarget.style.background = '#dc2626')}
+            onMouseOut={(e) => e.currentTarget.style.background = '#ef4444'}
           >
-            🗑️ Delete Account
+            <span style={{ marginRight: '6px' }}><i className="fa-solid fa-trash"></i></span> Delete
           </button>
         </div>
       </div>
 
-      <form onSubmit={handleFetch} style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+      <form onSubmit={handleFetch} style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap', background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
         <input 
           type="email" 
           value={email} 
           onChange={(e) => setEmail(e.target.value)} 
           placeholder="admin@luminagenpro.my.id"
           required
-          style={{ flex: 1, padding: '0.75rem', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem', minWidth: '200px' }}
+          style={{ flex: 1, padding: '0.75rem 1rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.95rem', minWidth: '200px', outline: 'none' }}
         />
         <input 
           type="password" 
@@ -246,48 +299,65 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
           onChange={(e) => setPassword(e.target.value)} 
           placeholder="Password"
           required
-          style={{ flex: 1, padding: '0.75rem', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem', minWidth: '200px' }}
+          style={{ flex: 1, padding: '0.75rem 1rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.95rem', minWidth: '200px', outline: 'none' }}
         />
         <button 
           type="submit" 
           disabled={status.loading}
-          style={{ padding: '0.75rem 1.5rem', background: '#0070f3', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: status.loading ? 'wait' : 'pointer' }}
+          style={{ padding: '0.75rem 1.5rem', background: '#1e293b', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', cursor: status.loading ? 'wait' : 'pointer', transition: 'background 0.2s' }}
+          onMouseOver={(e) => e.currentTarget.style.background = '#0f172a'}
+          onMouseOut={(e) => e.currentTarget.style.background = '#1e293b'}
         >
-          {status.loading ? 'Loading...' : 'Login & Fetch'}
+          {status.loading ? 'Loading...' : 'Login'}
         </button>
       </form>
 
-      {status.error && <div style={{ color: '#dc3545', padding: '1rem', background: '#f8d7da', borderRadius: '6px', marginBottom: '1rem' }}>{status.error}</div>}
-      {status.success && <div style={{ color: '#28a745', padding: '0.75rem', background: '#d4edda', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.9rem' }}>{status.success}</div>}
+      {status.error && <div style={{ color: '#b91c1c', padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.95rem' }}>{status.error}</div>}
+      {status.success && <div style={{ color: '#15803d', padding: '0.75rem 1rem', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.9rem' }}>{status.success}</div>}
 
       {emails.length > 0 ? (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {emails.map((msg: any) => (
-            <div key={msg.id} style={{ border: '1px solid #eaeaea', borderRadius: '8px', padding: '1rem', background: '#f9f9f9' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.9rem', color: '#666' }}>
-                <strong>From: {msg.from}</strong>
-                <span>{new Date(msg.date).toLocaleString()}</span>
-              </div>
-              <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem' }}>{msg.subject}</h3>
-              {msg.html ? (
-                <div style={{ border: '1px solid #ccc', borderRadius: '4px', overflow: 'hidden', background: '#fff', marginTop: '1rem' }}>
-                  <iframe 
-                    srcDoc={msg.html} 
-                    style={{ width: '100%', height: '400px', border: 'none', display: 'block' }} 
-                    title="Email Content"
-                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin"
-                  />
+            <div key={msg.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.5rem', background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#475569' }}>
+                    {msg.from.charAt(0).toUpperCase()}
+                  </div>
+                  <strong style={{ color: '#334155', fontSize: '0.95rem' }}>{msg.from}</strong>
                 </div>
-              ) : (
-                <p style={{ margin: 0, fontSize: '0.95rem', color: '#444', whiteSpace: 'pre-wrap', maxHeight: '200px', overflowY: 'auto' }}>
-                  {msg.text && msg.text.trim() ? msg.text : 'No text content'}
-                </p>
-              )}
+                <span style={{ fontSize: '0.85rem', color: '#64748b' }}>{new Date(msg.date).toLocaleString()}</span>
+              </div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.2rem', color: '#0f172a' }}>{msg.subject}</h3>
+                {msg.html ? (
+                  <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
+                    <iframe 
+                      srcDoc={msg.html} 
+                      style={{ width: '100%', height: '500px', border: 'none', display: 'block' }} 
+                      title="Email Content"
+                      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin"
+                    />
+                  </div>
+                ) : (
+                  <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                    <p style={{ margin: 0, fontSize: '0.95rem', color: '#334155', whiteSpace: 'pre-wrap', maxHeight: '300px', overflowY: 'auto' }}>
+                      {msg.text && msg.text.trim() ? msg.text : 'No text content'}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>
       ) : (
-        !status.loading && <p style={{ textAlign: 'center', color: '#666', marginTop: '2rem' }}>No emails found or inbox not checked yet.</p>
+        !status.loading && (
+          <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1' }}>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#94a3b8' }}><i className="fa-solid fa-envelope-open-text"></i></div>
+            <h3 style={{ margin: '0 0 0.5rem 0', color: '#334155' }}>Inbox is Empty</h3>
+            <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>Waiting for new emails to arrive...</p>
+          </div>
+        )
       )}
     </div>
   );
