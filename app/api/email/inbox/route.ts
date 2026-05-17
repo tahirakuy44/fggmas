@@ -52,6 +52,7 @@ export async function POST(request: Request) {
       const idHeader = "Imap-Id: "+id+"\r\n";
       
       try {
+        if (!all) throw new Error('Could not find email body part');
         const parsed = await simpleParser(idHeader + all.body);
         return {
           id,
