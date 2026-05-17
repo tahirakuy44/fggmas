@@ -4,10 +4,15 @@ import React, { useState, useEffect } from 'react';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'create' | 'inbox'>('create');
-  const [autoLoginCredentials, setAutoLoginCredentials] = useState<{email: string, password: string} | null>(null);
+  const [autoLoginCredentials, setAutoLoginCredentials] = useState<{email: string, password: string, createdAt: number} | null>(null);
 
-  const handleEmailCreated = (email: string, pass: string) => {
-    setAutoLoginCredentials({ email, password: pass });
+  // Trigger auto-cleanup on app load
+  useEffect(() => {
+    fetch('/api/email/cleanup', { method: 'POST' }).catch(console.error);
+  }, []);
+
+  const handleEmailCreated = (email: string, pass: string, createdAt: number) => {
+    setAutoLoginCredentials({ email, password: pass, createdAt });
     setActiveTab('inbox');
   };
 
@@ -105,9 +110,8 @@ export default function Home() {
   );
 }
 
-function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: string) => void }) {
+function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: string, createdAt: number) => void }) {
   const [prefix, setPrefix] = useState('');
-  const [password, setPassword] = useState('');
   const [status, setStatus] = useState({ loading: false, error: '', success: '' });
 
   const handleCreate = async (e: React.FormEvent) => {
@@ -115,10 +119,20 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
     setStatus({ loading: true, error: '', success: '' });
 
     try {
+      const createdAt = Date.now();
+      const finalPrefix = `${prefix}_${createdAt}`;
+      
+      // Auto-generate strong 16-char password
+      const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+      let generatedPassword = "";
+      for (let i = 0; i < 16; i++) {
+        generatedPassword += charset.charAt(Math.floor(Math.random() * charset.length));
+      }
+
       const res = await fetch('/api/email/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emailPrefix: prefix, password })
+        body: JSON.stringify({ emailPrefix: finalPrefix, password: generatedPassword })
       });
 
       const data = await res.json();
@@ -128,9 +142,8 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
       setStatus({ loading: false, error: '', success: `Success! Created ${data.email}` });
       
       setTimeout(() => {
-        onSuccess(data.email, password);
+        onSuccess(data.email, generatedPassword, createdAt);
         setPrefix('');
-        setPassword('');
       }, 1000); 
       
     } catch (err: any) {
@@ -142,7 +155,7 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
     <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       <div style={{ marginBottom: '0.5rem' }}>
         <h2 style={{ marginTop: 0, marginBottom: '0.5rem', fontSize: '1.5rem', color: '#1e293b' }}>Create Email Account</h2>
-        <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>Generate a new cPanel email address instantly.</p>
+        <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>Generate a temporary cPanel email. Password will be securely auto-generated and hidden.</p>
       </div>
       
       <div>
@@ -151,7 +164,7 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
           <input 
             type="text" 
             value={prefix} 
-            onChange={(e) => setPrefix(e.target.value)} 
+            onChange={(e) => setPrefix(e.target.value.replace(/[^a-zA-Z0-9]/g, ''))} 
             placeholder="e.g. admin"
             required
             style={{ flex: 1, padding: '0.75rem 1rem', borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px', border: '1px solid #cbd5e1', borderRight: 'none', fontSize: '1rem', outline: 'none' }}
@@ -160,28 +173,17 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
             @luminagenpro.my.id
           </div>
         </div>
-      </div>
-      
-      <div>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#334155', fontSize: '0.9rem' }}>Password</label>
-        <input 
-          type="text" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          placeholder="Enter a strong password"
-          required
-          style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem', boxSizing: 'border-box', outline: 'none' }}
-        />
+        <p style={{ margin: '0.5rem 0 0 0', color: '#94a3b8', fontSize: '0.8rem' }}>* A timestamp will be automatically appended to the prefix for auto-deletion purposes.</p>
       </div>
       
       <button 
         type="submit" 
-        disabled={status.loading}
-        style={{ padding: '0.875rem', background: '#2563eb', color: 'white', border: 'none', borderRadius: '8px', fontSize: '1rem', fontWeight: '600', cursor: status.loading ? 'wait' : 'pointer', marginTop: '0.5rem', transition: 'background 0.2s', boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.2)' }}
-        onMouseOver={(e) => e.currentTarget.style.background = '#1d4ed8'}
+        disabled={status.loading || !prefix}
+        style={{ padding: '0.875rem', background: '#2563eb', color: 'white', border: 'none', borderRadius: '8px', fontSize: '1rem', fontWeight: '600', cursor: (status.loading || !prefix) ? 'not-allowed' : 'pointer', marginTop: '0.5rem', transition: 'background 0.2s', boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.2)' }}
+        onMouseOver={(e) => (!status.loading && prefix) && (e.currentTarget.style.background = '#1d4ed8')}
         onMouseOut={(e) => e.currentTarget.style.background = '#2563eb'}
       >
-        {status.loading ? 'Creating...' : 'Create Email Account'}
+        {status.loading ? 'Creating Secure Account...' : 'Generate Auto-Destruct Email'}
       </button>
 
       {status.error && <div style={{ color: '#b91c1c', padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', fontSize: '0.95rem' }}>{status.error}</div>}
@@ -190,17 +192,33 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
   );
 }
 
-function InboxViewer({ credentials }: { credentials: {email: string, password: string} | null }) {
+function InboxViewer({ credentials }: { credentials: {email: string, password: string, createdAt: number} | null }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState({ loading: false, error: '', success: '' });
   const [emails, setEmails] = useState<any[]>([]);
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
 
   useEffect(() => {
     if (credentials) {
       setEmail(credentials.email);
       setPassword(credentials.password);
       fetchInbox(credentials.email, credentials.password);
+
+      // Countdown Timer Logic
+      const updateTimer = () => {
+        const elapsed = Date.now() - credentials.createdAt;
+        const remaining = Math.max(0, (10 * 60 * 1000) - elapsed);
+        setTimeLeft(Math.floor(remaining / 1000));
+        
+        if (remaining <= 0) {
+           handleDeleteAccount(credentials.email, true);
+        }
+      };
+      
+      updateTimer();
+      const interval = setInterval(updateTimer, 1000);
+      return () => clearInterval(interval);
     }
   }, [credentials]);
 
@@ -229,10 +247,10 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
     }
   };
 
-  const handleDeleteAccount = async () => {
-    if (!email) return;
+  const handleDeleteAccount = async (targetEmail: string = email, autoExpired: boolean = false) => {
+    if (!targetEmail) return;
     
-    if (!window.confirm(`Are you sure you want to PERMANENTLY delete the account ${email}? This cannot be undone.`)) {
+    if (!autoExpired && !window.confirm(`Are you sure you want to PERMANENTLY delete the account ${targetEmail}? This cannot be undone.`)) {
       return;
     }
 
@@ -242,35 +260,55 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
       const res = await fetch('/api/email/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emailAddress: email })
+        body: JSON.stringify({ emailAddress: targetEmail })
       });
 
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.error || 'Failed to delete account');
 
-      setStatus({ loading: false, error: '', success: 'Account deleted successfully!' });
+      setStatus({ loading: false, error: '', success: autoExpired ? 'Account expired and was auto-deleted!' : 'Account deleted successfully!' });
       setEmails([]);
       setEmail('');
       setPassword('');
+      setTimeLeft(null);
       
     } catch (err: any) {
       setStatus({ loading: false, error: err.message, success: '' });
     }
   };
 
-  const handleFetch = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchInbox(email, password);
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   };
+
+  if (!credentials && !email) {
+    return (
+      <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1' }}>
+        <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#94a3b8' }}><i className="fa-solid fa-inbox"></i></div>
+        <h3 style={{ margin: '0 0 0.5rem 0', color: '#334155' }}>No Active Session</h3>
+        <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>Please create a new email to check its inbox.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h2 style={{ marginTop: 0, marginBottom: '0.25rem', fontSize: '1.5rem', color: '#1e293b' }}>Check Inbox</h2>
-          <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>Read and manage emails for your generated accounts.</p>
+          <h2 style={{ marginTop: 0, marginBottom: '0.25rem', fontSize: '1.5rem', color: '#1e293b' }}>Secure Inbox</h2>
+          <p style={{ margin: 0, color: '#2563eb', fontSize: '0.95rem', fontWeight: 600 }}>{email}</p>
         </div>
+        
+        {timeLeft !== null && (
+          <div style={{ display: 'flex', alignItems: 'center', background: timeLeft < 60 ? '#fef2f2' : '#f8fafc', border: `1px solid ${timeLeft < 60 ? '#fca5a5' : '#cbd5e1'}`, padding: '0.5rem 1rem', borderRadius: '8px', color: timeLeft < 60 ? '#ef4444' : '#475569', fontWeight: 'bold' }}>
+            <i className="fa-regular fa-clock" style={{ marginRight: '8px' }}></i>
+            Time Remaining: {formatTime(timeLeft)}
+          </div>
+        )}
+
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <button 
             onClick={() => fetchInbox(email, password)}
@@ -283,7 +321,7 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
           </button>
           <button 
             type="button"
-            onClick={handleDeleteAccount}
+            onClick={() => handleDeleteAccount(email, false)}
             disabled={status.loading || !email}
             style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#ef4444', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', fontSize: '0.9rem', cursor: (status.loading || !email) ? 'not-allowed' : 'pointer', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}
             onMouseOver={(e) => !status.loading && email && (e.currentTarget.style.background = '#dc2626')}
@@ -293,34 +331,6 @@ function InboxViewer({ credentials }: { credentials: {email: string, password: s
           </button>
         </div>
       </div>
-
-      <form onSubmit={handleFetch} style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap', background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-        <input 
-          type="email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          placeholder="admin@luminagenpro.my.id"
-          required
-          style={{ flex: 1, padding: '0.75rem 1rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.95rem', minWidth: '200px', outline: 'none' }}
-        />
-        <input 
-          type="password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          placeholder="Password"
-          required
-          style={{ flex: 1, padding: '0.75rem 1rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.95rem', minWidth: '200px', outline: 'none' }}
-        />
-        <button 
-          type="submit" 
-          disabled={status.loading}
-          style={{ padding: '0.75rem 1.5rem', background: '#1e293b', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', cursor: status.loading ? 'wait' : 'pointer', transition: 'background 0.2s' }}
-          onMouseOver={(e) => e.currentTarget.style.background = '#0f172a'}
-          onMouseOut={(e) => e.currentTarget.style.background = '#1e293b'}
-        >
-          {status.loading ? 'Loading...' : 'Login'}
-        </button>
-      </form>
 
       {status.error && <div style={{ color: '#b91c1c', padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.95rem' }}>{status.error}</div>}
       {status.success && <div style={{ color: '#15803d', padding: '0.75rem 1rem', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.9rem' }}>{status.success}</div>}
