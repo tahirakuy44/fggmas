@@ -55,6 +55,16 @@ export default function Home() {
           >
             <i className="fa-solid fa-clapperboard" style={{ marginRight: '6px' }}></i> Kling Motion
           </a>
+          <a 
+            href="https://fal.ai/explore" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#f97316', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(249, 115, 22, 0.3)' }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            <i className="fa-solid fa-cube" style={{ marginRight: '6px' }}></i> Model
+          </a>
         </div>
       </header>
 
