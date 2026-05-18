@@ -28,7 +28,7 @@ export default function Home() {
         
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <a 
-            href="https://ais-pre-2qhdmsbs7fyvvwuto2ee2y-63035386885.asia-east1.run.app" 
+            href="https://ais-pre-whsbnqzopemevsph7dt7g4-63035386885.asia-east1.run.app" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.3)' }}
