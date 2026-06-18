@@ -1,0 +1,73 @@
+.container { display: flex; flex-direction: column; min-height: 100vh; font-family: Inter, system-ui, sans-serif; background-color: #f8fafc; color: #0f172a; }
+.header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background-color: rgba(255, 255, 255, 0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 10; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+.logoContainer { display: flex; align-items: center; gap: 0.75rem; }
+.logoIcon { width: 32px; height: 32px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem; }
+.logoText { margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.025em; color: #1e293b; }
+.navLinks { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.navLink { display: inline-flex; align-items: center; padding: 0.5rem 1rem; background: #0f172a; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.875rem; transition: all 0.2s; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.3); }
+.navLink:hover { transform: translateY(-1px); }
+.navIcon { width: 16px; height: 16px; margin-right: 6px; }
+.mainBody { display: flex; flex: 1; overflow: hidden; }
+.sidebar { width: 260px; background-color: #ffffff; border-right: 1px solid #e2e8f0; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.sidebarTitle { font-size: 0.75rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; padding-left: 0.5rem; }
+.sidebarButton { display: flex; align-items: center; padding: 0.75rem 1rem; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; text-align: left; transition: all 0.2s; }
+.sidebarButtonActive { background: #eff6ff; color: #2563eb; font-weight: 600; }
+.sidebarButtonInactive { background: transparent; color: #475569; font-weight: 500; }
+.sidebarIcon { margin-right: 10px; font-size: 1.2rem; }
+.contentArea { flex: 1; padding: 2rem; overflow-y: auto; }
+.contentCard { max-width: 800px; margin: 0 auto; background: #ffffff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); border: 1px solid #f1f5f9; }
+
+.formContainer { display: flex; flex-direction: column; gap: 1.25rem; }
+.formHeader { margin-bottom: 0.5rem; }
+.formTitle { margin-top: 0; margin-bottom: 0.5rem; font-size: 1.5rem; color: #1e293b; }
+.formSubtitle { margin: 0; color: #64748b; font-size: 0.95rem; }
+.inputLabel { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #334155; font-size: 0.9rem; }
+.inputLabelNoMargin { display: block; margin-bottom: 0; font-weight: 600; color: #334155; font-size: 0.9rem; }
+.labelRow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.generateButtonSmall { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s; }
+.generateButtonSmall:hover { background: #dbeafe; }
+.inputGroup { display: flex; align-items: stretch; }
+.inputField { flex: 1; padding: 0.75rem 1rem; border-top-left-radius: 8px; border-bottom-left-radius: 8px; border: 1px solid #cbd5e1; border-right: none; font-size: 1rem; outline: none; }
+.inputDomain { display: flex; align-items: center; padding: 0 1rem; background: #f8fafc; border: 1px solid #cbd5e1; border-top-right-radius: 8px; border-bottom-right-radius: 8px; color: #64748b; font-weight: 500; }
+.domainSelect { cursor: pointer; outline: none; appearance: none; padding-right: 2rem; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.7rem center; background-size: 1em; }
+.inputNote { margin: 0.5rem 0 0 0; color: #94a3b8; font-size: 0.8rem; }
+.submitButton { padding: 0.875rem; background: #0f172a; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2); }
+.submitButton:hover:not(:disabled) { background: #1e293b; }
+.submitButton:disabled { cursor: not-allowed; }
+.errorBox { color: #b91c1c; padding: 1rem; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; font-size: 0.95rem; }
+.successBox { color: #15803d; padding: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-size: 0.95rem; }
+.messageBoxMargin { margin-bottom: 1.5rem; }
+
+.emptyState { text-align: center; padding: 4rem 2rem; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1; }
+.emptyStateIcon { font-size: 3rem; margin-bottom: 1rem; color: #94a3b8; }
+.emptyStateTitle { margin: 0 0 0.5rem 0; color: #334155; }
+.emptyStateText { margin: 0; color: #64748b; font-size: 0.95rem; }
+.inboxHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
+.inboxTitle { margin-top: 0; margin-bottom: 0.25rem; font-size: 1.5rem; color: #1e293b; }
+.emailAddressRow { display: flex; align-items: center; gap: 0.5rem; }
+.emailAddressText { margin: 0; color: #2563eb; font-size: 1.05rem; font-weight: 600; }
+.copyButton { display: flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.6rem; background: #0f172a; color: white; border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.copyButton:hover { background: #1e293b; }
+.copyButtonSuccess { background: #10b981 !important; color: white !important; }
+.timerBox { display: flex; align-items: center; padding: 0.5rem 1rem; border-radius: 8px; font-weight: bold; }
+.timerNormal { background: #f8fafc; border: 1px solid #cbd5e1; color: #475569; }
+.timerWarning { background: #fef2f2; border: 1px solid #fca5a5; color: #ef4444; }
+.timerIcon { margin-right: 8px; }
+.actionButtons { display: flex; gap: 0.5rem; }
+.actionButton { display: flex; align-items: center; padding: 0.5rem 1rem; background: #0f172a; color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; box-shadow: 0 1px 2px rgba(15,23,42,0.05); }
+.actionButton:hover:not(:disabled) { background: #1e293b; }
+.actionButton:disabled { cursor: not-allowed; }
+.actionButtonIcon { margin-right: 6px; }
+.emailList { display: flex; flex-direction: column; gap: 1.5rem; }
+.emailItem { border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.emailItemHeader { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+.emailSenderRow { display: flex; align-items: center; gap: 0.5rem; }
+.emailSenderAvatar { width: 32px; height: 32px; border-radius: 50%; background: #cbd5e1; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #475569; }
+.emailSenderName { color: #334155; font-size: 0.95rem; }
+.emailDate { font-size: 0.85rem; color: #64748b; }
+.emailBody { padding: 1.5rem; }
+.emailSubject { margin: 0 0 1rem 0; font-size: 1.2rem; color: #0f172a; }
+.emailHtmlContainer { border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background: #fff; }
+.emailIframe { width: 100%; height: 500px; border: none; display: block; }
+.emailTextContainer { background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; }
+.emailTextContent { margin: 0; font-size: 0.95rem; color: #334155; white-space: pre-wrap; max-height: 300px; overflow-y: auto; }

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import styles from './page.module.css';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'create' | 'inbox'>('create');
@@ -17,25 +18,23 @@ export default function Home() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', color: '#0f172a' }}>
+    <div className={styles.container}>
       
       {/* HEADER */}
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', backgroundColor: 'rgba(255, 255, 255, 0.9)', backdropFilter: 'blur(10px)', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 10, boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ width: '32px', height: '32px', background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1.2rem' }}><i className="fa-brands fa-optin-monster"></i></div>
-          <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, letterSpacing: '-0.025em', color: '#1e293b' }}>LuminagenPro</h1>
+      <header className={styles.header}>
+        <div className={styles.logoContainer}>
+          <div className={styles.logoIcon}><i className="fa-brands fa-optin-monster"></i></div>
+          <h1 className={styles.logoText}>Reaps</h1>
         </div>
         
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <div className={styles.navLinks}>
           <a 
             href="https://ais-pre-whsbnqzopemevsph7dt7g4-63035386885.asia-east1.run.app" 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.3)' }}
-            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            className={styles.navLink}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style={{ width: '16px', height: '16px', marginRight: '6px' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={styles.navIcon}>
               <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
             </svg>
             Download YouTube
@@ -44,60 +43,54 @@ export default function Home() {
             href="https://ais-pre-fl4ck7s22gpwguilccyvgq-63035386885.asia-east1.run.app" 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.3)' }}
-            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            className={styles.navLink}
           >
-            <i className="fa-solid fa-scissors" style={{ marginRight: '6px' }}></i> Video Cutter
+            <i className={`fa-solid fa-scissors ${styles.actionButtonIcon}`}></i> Video Cutter
           </a>
           <a 
             href="https://weave.figma.com/" 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.3)' }}
-            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            className={styles.navLink}
           >
-            <i className="fa-solid fa-clapperboard" style={{ marginRight: '6px' }}></i> Kling Motion
+            <i className={`fa-solid fa-clapperboard ${styles.actionButtonIcon}`}></i> Kling Motion
           </a>
           <a 
             href="https://fal.ai/explore" 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', textDecoration: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.875rem', transition: 'all 0.2s', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.3)' }}
-            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            className={styles.navLink}
           >
-            <i className="fa-solid fa-cube" style={{ marginRight: '6px' }}></i> Model
+            <i className={`fa-solid fa-cube ${styles.actionButtonIcon}`}></i> Model
           </a>
         </div>
       </header>
 
       {/* MAIN BODY */}
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+      <div className={styles.mainBody}>
         
         {/* SIDEBAR */}
-        <aside style={{ width: '260px', backgroundColor: '#ffffff', borderRight: '1px solid #e2e8f0', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem', paddingLeft: '0.5rem' }}>Menu Utama</div>
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarTitle}>Menu Utama</div>
           
           <button 
             onClick={() => setActiveTab('create')}
-            style={{ display: 'flex', alignItems: 'center', padding: '0.75rem 1rem', background: activeTab === 'create' ? '#eff6ff' : 'transparent', color: activeTab === 'create' ? '#2563eb' : '#475569', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: activeTab === 'create' ? 600 : 500, fontSize: '0.95rem', textAlign: 'left', transition: 'all 0.2s' }}
+            className={`${styles.sidebarButton} ${activeTab === 'create' ? styles.sidebarButtonActive : styles.sidebarButtonInactive}`}
           >
-            <span style={{ marginRight: '10px', fontSize: '1.2rem' }}><i className="fa-solid fa-envelope"></i></span> Create New Email
+            <span className={styles.sidebarIcon}><i className="fa-solid fa-envelope"></i></span> Create New Email
           </button>
           
           <button 
             onClick={() => setActiveTab('inbox')}
-            style={{ display: 'flex', alignItems: 'center', padding: '0.75rem 1rem', background: activeTab === 'inbox' ? '#eff6ff' : 'transparent', color: activeTab === 'inbox' ? '#2563eb' : '#475569', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: activeTab === 'inbox' ? 600 : 500, fontSize: '0.95rem', textAlign: 'left', transition: 'all 0.2s' }}
+            className={`${styles.sidebarButton} ${activeTab === 'inbox' ? styles.sidebarButtonActive : styles.sidebarButtonInactive}`}
           >
-            <span style={{ marginRight: '10px', fontSize: '1.2rem' }}><i className="fa-solid fa-inbox"></i></span> Check Inbox
+            <span className={styles.sidebarIcon}><i className="fa-solid fa-inbox"></i></span> Check Inbox
           </button>
         </aside>
 
         {/* CONTENT AREA */}
-        <main style={{ flex: 1, padding: '2rem', overflowY: 'auto' }}>
-          <div style={{ maxWidth: '800px', margin: '0 auto', background: '#ffffff', padding: '2.5rem', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)', border: '1px solid #f1f5f9' }}>
+        <main className={styles.contentArea}>
+          <div className={styles.contentCard}>
             {activeTab === 'create' ? (
               <CreateEmailForm onSuccess={handleEmailCreated} />
             ) : (
@@ -115,7 +108,12 @@ export default function Home() {
 
 function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: string, createdAt: number) => void }) {
   const [prefix, setPrefix] = useState('');
+  const [domain, setDomain] = useState('reaps.my.id');
   const [status, setStatus] = useState({ loading: false, error: '', success: '' });
+
+  useEffect(() => {
+    setPrefix(Math.random().toString(36).substring(2, 10));
+  }, []);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -135,7 +133,7 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
       const res = await fetch('/api/email/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emailPrefix: finalPrefix, password: generatedPassword })
+        body: JSON.stringify({ emailPrefix: finalPrefix, password: generatedPassword, domain })
       });
 
       const data = await res.json();
@@ -155,42 +153,56 @@ function CreateEmailForm({ onSuccess }: { onSuccess: (email: string, pass: strin
   };
 
   return (
-    <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-      <div style={{ marginBottom: '0.5rem' }}>
-        <h2 style={{ marginTop: 0, marginBottom: '0.5rem', fontSize: '1.5rem', color: '#1e293b' }}>Create Email Account</h2>
-        <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>Generate a temporary cPanel email. Password will be securely auto-generated and hidden.</p>
+    <form onSubmit={handleCreate} className={styles.formContainer}>
+      <div className={styles.formHeader}>
+        <h2 className={styles.formTitle}>Create Email Account</h2>
+        <p className={styles.formSubtitle}>Generate a temporary cPanel email. Password will be securely auto-generated and hidden.</p>
       </div>
       
       <div>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#334155', fontSize: '0.9rem' }}>Email Prefix</label>
-        <div style={{ display: 'flex', alignItems: 'stretch' }}>
+        <div className={styles.labelRow}>
+          <label className={styles.inputLabelNoMargin}>Email Prefix</label>
+          <button 
+            type="button"
+            className={styles.generateButtonSmall}
+            onClick={() => setPrefix(Math.random().toString(36).substring(2, 10))}
+          >
+            <i className="fa-solid fa-dice"></i> Generate Random
+          </button>
+        </div>
+        <div className={styles.inputGroup}>
           <input 
             type="text" 
             value={prefix} 
             onChange={(e) => setPrefix(e.target.value.replace(/[^a-zA-Z0-9]/g, ''))} 
             placeholder="e.g. admin"
             required
-            style={{ flex: 1, padding: '0.75rem 1rem', borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px', border: '1px solid #cbd5e1', borderRight: 'none', fontSize: '1rem', outline: 'none' }}
+            className={styles.inputField}
           />
-          <div style={{ display: 'flex', alignItems: 'center', padding: '0 1rem', background: '#f8fafc', border: '1px solid #cbd5e1', borderTopRightRadius: '8px', borderBottomRightRadius: '8px', color: '#64748b', fontWeight: 500 }}>
-            @luminagenpro.my.id
-          </div>
+          <select 
+            className={`${styles.inputDomain} ${styles.domainSelect}`} 
+            value={domain} 
+            onChange={(e) => setDomain(e.target.value)}
+            title="Select Domain"
+            aria-label="Select Domain"
+          >
+            <option value="reaps.my.id">@reaps.my.id</option>
+            <option value="kangleonardo.site">@kangleonardo.site</option>
+          </select>
         </div>
-        <p style={{ margin: '0.5rem 0 0 0', color: '#94a3b8', fontSize: '0.8rem' }}>* A timestamp will be automatically appended to the prefix for auto-deletion purposes.</p>
+        <p className={styles.inputNote}>* A timestamp will be automatically appended to the prefix for auto-deletion purposes.</p>
       </div>
       
       <button 
         type="submit" 
         disabled={status.loading || !prefix}
-        style={{ padding: '0.875rem', background: '#0f172a', color: 'white', border: 'none', borderRadius: '8px', fontSize: '1rem', fontWeight: '600', cursor: (status.loading || !prefix) ? 'not-allowed' : 'pointer', marginTop: '0.5rem', transition: 'background 0.2s', boxShadow: '0 4px 6px -1px rgba(15, 23, 42, 0.2)' }}
-        onMouseOver={(e) => (!status.loading && prefix) && (e.currentTarget.style.background = '#1e293b')}
-        onMouseOut={(e) => e.currentTarget.style.background = '#0f172a'}
+        className={styles.submitButton}
       >
         {status.loading ? 'Creating Secure Account...' : 'Generate Auto-Destruct Email'}
       </button>
 
-      {status.error && <div style={{ color: '#b91c1c', padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', fontSize: '0.95rem' }}>{status.error}</div>}
-      {status.success && <div style={{ color: '#15803d', padding: '1rem', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', fontSize: '0.95rem' }}>{status.success}</div>}
+      {status.error && <div className={styles.errorBox}>{status.error}</div>}
+      {status.success && <div className={styles.successBox}>{status.success}</div>}
     </form>
   );
 }
@@ -201,6 +213,7 @@ function InboxViewer({ credentials, onClearCredentials }: { credentials: {email:
   const [status, setStatus] = useState({ loading: false, error: '', success: '' });
   const [emails, setEmails] = useState<any[]>([]);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [copied, setCopied] = useState(false);
   const previousEmailCount = React.useRef(0);
 
   useEffect(() => {
@@ -309,108 +322,95 @@ function InboxViewer({ credentials, onClearCredentials }: { credentials: {email:
 
   if (!email) {
     return (
-      <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1' }}>
-        <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#94a3b8' }}><i className="fa-solid fa-inbox"></i></div>
-        <h3 style={{ margin: '0 0 0.5rem 0', color: '#334155' }}>No Active Session</h3>
-        <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>Please create a new email to check its inbox.</p>
+      <div className={styles.emptyState}>
+        <div className={styles.emptyStateIcon}><i className="fa-solid fa-inbox"></i></div>
+        <h3 className={styles.emptyStateTitle}>No Active Session</h3>
+        <p className={styles.emptyStateText}>Please create a new email to check its inbox.</p>
       </div>
     );
   }
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
+      <div className={styles.inboxHeader}>
         <div>
-          <h2 style={{ marginTop: 0, marginBottom: '0.25rem', fontSize: '1.5rem', color: '#1e293b' }}>Secure Inbox</h2>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <p style={{ margin: 0, color: '#2563eb', fontSize: '1.05rem', fontWeight: 600 }}>{email}</p>
+          <h2 className={styles.inboxTitle}>Secure Inbox</h2>
+          <div className={styles.emailAddressRow}>
+            <p className={styles.emailAddressText}>{email}</p>
             <button 
               onClick={() => {
                 navigator.clipboard.writeText(email);
-                const btn = document.getElementById('copy-email-btn');
-                if (btn) {
-                  const originalHtml = btn.innerHTML;
-                  btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                  btn.style.background = '#10b981';
-                  btn.style.color = 'white';
-                  setTimeout(() => {
-                    btn.innerHTML = originalHtml;
-                    btn.style.background = '#e0e7ff';
-                    btn.style.color = '#4f46e5';
-                  }, 2000);
-                }
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
               }}
-              id="copy-email-btn"
               title="Copy email address"
-              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.25rem 0.6rem', background: '#0f172a', color: 'white', border: 'none', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
-              onMouseOver={(e) => { if (e.currentTarget.style.background === 'rgb(15, 23, 42)') e.currentTarget.style.background = '#1e293b'; }}
-              onMouseOut={(e) => { if (e.currentTarget.style.background === 'rgb(30, 41, 59)') e.currentTarget.style.background = '#0f172a'; }}
+              className={`${styles.copyButton} ${copied ? styles.copyButtonSuccess : ''}`}
             >
-              <i className="fa-regular fa-copy"></i> Copy
+              {copied ? (
+                <><i className="fa-solid fa-check"></i> Copied!</>
+              ) : (
+                <><i className="fa-regular fa-copy"></i> Copy</>
+              )}
             </button>
           </div>
         </div>
         
         {timeLeft !== null && (
-          <div style={{ display: 'flex', alignItems: 'center', background: timeLeft < 60 ? '#fef2f2' : '#f8fafc', border: `1px solid ${timeLeft < 60 ? '#fca5a5' : '#cbd5e1'}`, padding: '0.5rem 1rem', borderRadius: '8px', color: timeLeft < 60 ? '#ef4444' : '#475569', fontWeight: 'bold' }}>
-            <i className="fa-regular fa-clock" style={{ marginRight: '8px' }}></i>
+          <div className={`${styles.timerBox} ${timeLeft < 60 ? styles.timerWarning : styles.timerNormal}`}>
+            <i className={`fa-regular fa-clock ${styles.timerIcon}`}></i>
             Time Remaining: {formatTime(timeLeft)}
           </div>
         )}
 
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <div className={styles.actionButtons}>
           <button 
             onClick={() => fetchInbox(email, password)}
             disabled={status.loading || !email || !password}
-            style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', fontSize: '0.9rem', cursor: (status.loading || !email || !password) ? 'not-allowed' : 'pointer', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(15,23,42,0.05)' }}
-            onMouseOver={(e) => !status.loading && email && password && (e.currentTarget.style.background = '#1e293b')}
-            onMouseOut={(e) => e.currentTarget.style.background = '#0f172a'}
+            className={styles.actionButton}
           >
-            <span style={{ marginRight: '6px' }}><i className="fa-solid fa-rotate-right"></i></span> Refresh
+            <span className={styles.actionButtonIcon}><i className="fa-solid fa-rotate-right"></i></span> Refresh
           </button>
           <button 
             type="button"
             onClick={() => handleDeleteAccount(email, false)}
             disabled={status.loading || !email}
-            style={{ display: 'flex', alignItems: 'center', padding: '0.5rem 1rem', background: '#0f172a', color: 'white', border: 'none', borderRadius: '6px', fontWeight: '600', fontSize: '0.9rem', cursor: (status.loading || !email) ? 'not-allowed' : 'pointer', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(15,23,42,0.05)' }}
-            onMouseOver={(e) => !status.loading && email && (e.currentTarget.style.background = '#1e293b')}
-            onMouseOut={(e) => e.currentTarget.style.background = '#0f172a'}
+            className={styles.actionButton}
           >
-            <span style={{ marginRight: '6px' }}><i className="fa-solid fa-trash"></i></span> Delete
+            <span className={styles.actionButtonIcon}><i className="fa-solid fa-trash"></i></span> Delete
           </button>
         </div>
       </div>
 
-      {status.error && <div style={{ color: '#b91c1c', padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.95rem' }}>{status.error}</div>}
-      {status.success && <div style={{ color: '#15803d', padding: '0.75rem 1rem', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.9rem' }}>{status.success}</div>}
+      {status.error && <div className={`${styles.errorBox} ${styles.messageBoxMargin}`}>{status.error}</div>}
+      {status.success && <div className={`${styles.successBox} ${styles.messageBoxMargin}`}>{status.success}</div>}
 
       {emails.length > 0 ? (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div className={styles.emailList}>
           {emails.map((msg: any) => (
-            <div key={msg.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.5rem', background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#475569' }}>
+            <div key={msg.id} className={styles.emailItem}>
+              <div className={styles.emailItemHeader}>
+                <div className={styles.emailSenderRow}>
+                  <div className={styles.emailSenderAvatar}>
                     {msg.from.charAt(0).toUpperCase()}
                   </div>
-                  <strong style={{ color: '#334155', fontSize: '0.95rem' }}>{msg.from}</strong>
+                  <strong className={styles.emailSenderName}>{msg.from}</strong>
                 </div>
-                <span style={{ fontSize: '0.85rem', color: '#64748b' }}>{new Date(msg.date).toLocaleString()}</span>
+                <span className={styles.emailDate}>{new Date(msg.date).toLocaleString()}</span>
               </div>
-              <div style={{ padding: '1.5rem' }}>
-                <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.2rem', color: '#0f172a' }}>{msg.subject}</h3>
+              <div className={styles.emailBody}>
+                <h3 className={styles.emailSubject}>{msg.subject}</h3>
                 {msg.html ? (
-                  <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
+                  <div className={styles.emailHtmlContainer}>
                     <iframe 
                       srcDoc={`<base target="_blank">${msg.html}`} 
-                      style={{ width: '100%', height: '500px', border: 'none', display: 'block' }} 
+                      className={styles.emailIframe}
                       title="Email Content"
                       sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin"
                     />
                   </div>
                 ) : (
-                  <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                    <p style={{ margin: 0, fontSize: '0.95rem', color: '#334155', whiteSpace: 'pre-wrap', maxHeight: '300px', overflowY: 'auto' }}>
+                  <div className={styles.emailTextContainer}>
+                    <p className={styles.emailTextContent}>
                       {msg.text && msg.text.trim() ? msg.text : 'No text content'}
                     </p>
                   </div>
@@ -421,10 +421,10 @@ function InboxViewer({ credentials, onClearCredentials }: { credentials: {email:
         </div>
       ) : (
         !status.loading && (
-          <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#94a3b8' }}><i className="fa-solid fa-envelope-open-text"></i></div>
-            <h3 style={{ margin: '0 0 0.5rem 0', color: '#334155' }}>Inbox is Empty</h3>
-            <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>Waiting for new emails to arrive...</p>
+          <div className={styles.emptyState}>
+            <div className={styles.emptyStateIcon}><i className="fa-solid fa-envelope-open-text"></i></div>
+            <h3 className={styles.emptyStateTitle}>Inbox is Empty</h3>
+            <p className={styles.emptyStateText}>Waiting for new emails to arrive...</p>
           </div>
         )
       )}

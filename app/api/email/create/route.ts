@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    const { emailPrefix, password, quota = 1024 } = await request.json();
+    const { emailPrefix, password, domain, quota = 1024 } = await request.json();
 
     if (!emailPrefix || !password) {
       return NextResponse.json({ error: 'Email prefix and password are required' }, { status: 400 });
@@ -15,7 +15,9 @@ export async function POST(request: Request) {
       DOMAIN_NAME,
     } = process.env;
 
-    if (!CPANEL_HOSTNAME || !CPANEL_USERNAME || !CPANEL_API_TOKEN || !DOMAIN_NAME) {
+    const selectedDomain = domain || DOMAIN_NAME;
+
+    if (!CPANEL_HOSTNAME || !CPANEL_USERNAME || !CPANEL_API_TOKEN || !selectedDomain) {
       return NextResponse.json({ error: 'Server configuration error (missing environment variables)' }, { status: 500 });
     }
 
@@ -26,7 +28,7 @@ export async function POST(request: Request) {
     const url = new URL(`${baseUrl}/execute/Email/add_pop`);
     url.searchParams.append('email', emailPrefix);
     url.searchParams.append('password', password);
-    url.searchParams.append('domain', DOMAIN_NAME);
+    url.searchParams.append('domain', selectedDomain);
     url.searchParams.append('quota', quota.toString());
 
     // Call cPanel API
@@ -46,7 +48,7 @@ export async function POST(request: Request) {
     if (data.status === 1) {
       return NextResponse.json({ 
         message: 'Email account created successfully',
-        email: `${emailPrefix}@${DOMAIN_NAME}`
+        email: `${emailPrefix}@${selectedDomain}`
       });
     }
 

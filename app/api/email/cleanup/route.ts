@@ -5,9 +5,8 @@ export async function POST(req: Request) {
     const cpanelHost = process.env.CPANEL_HOSTNAME;
     const cpanelUser = process.env.CPANEL_USERNAME;
     const cpanelToken = process.env.CPANEL_API_TOKEN;
-    const domainName = process.env.DOMAIN_NAME;
 
-    if (!cpanelHost || !cpanelUser || !cpanelToken || !domainName) {
+    if (!cpanelHost || !cpanelUser || !cpanelToken) {
       throw new Error('Missing cPanel configuration in environment variables');
     }
 
@@ -33,7 +32,7 @@ export async function POST(req: Request) {
 
     // 2. Loop through and check for expired timestamp
     for (const account of emailAccounts) {
-      // account.email usually looks like "admin_1716123456@luminagenpro.my.id"
+      // account.email usually looks like "admin_1716123456@reaps.my.id"
       // account.user is usually "admin_1716123456"
       const username = account.login || account.email || account.user;
       
@@ -44,9 +43,12 @@ export async function POST(req: Request) {
         
         // If the email is older than 5 minutes, delete it
         if (now - timestamp > timeLimitInMs) {
-          const emailPrefix = username.split('@')[0];
+          const parts = username.split('@');
+          const emailPrefix = parts[0];
+          // Determine the domain from the account itself or fallback to process.env
+          const domain = parts.length > 1 ? parts[1] : (process.env.DOMAIN_NAME || 'reaps.my.id');
           
-          const deleteUrl = `${cpanelHost}/execute/Email/delete_pop?email=${encodeURIComponent(emailPrefix)}&domain=${encodeURIComponent(domainName)}`;
+          const deleteUrl = `${cpanelHost}/execute/Email/delete_pop?email=${encodeURIComponent(emailPrefix)}&domain=${encodeURIComponent(domain)}`;
           await fetch(deleteUrl, {
             method: 'GET',
             headers: {
