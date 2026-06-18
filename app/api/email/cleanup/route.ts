@@ -45,8 +45,8 @@ export async function POST(req: Request) {
         if (now - timestamp > timeLimitInMs) {
           const parts = username.split('@');
           const emailPrefix = parts[0];
-          // Determine the domain from the account itself or fallback to process.env
-          const domain = parts.length > 1 ? parts[1] : (process.env.DOMAIN_NAME || 'reaps.my.id');
+          // Determine the domain directly from the account itself
+          const domain = parts.length > 1 ? parts[1] : 'reaps.my.id';
           
           const deleteUrl = `${cpanelHost}/execute/Email/delete_pop?email=${encodeURIComponent(emailPrefix)}&domain=${encodeURIComponent(domain)}`;
           await fetch(deleteUrl, {

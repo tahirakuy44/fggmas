@@ -12,12 +12,13 @@ export async function POST(request: Request) {
       CPANEL_HOSTNAME,
       CPANEL_USERNAME,
       CPANEL_API_TOKEN,
-      DOMAIN_NAME,
     } = process.env;
 
-    const selectedDomain = domain || DOMAIN_NAME;
+    if (!domain) {
+      return NextResponse.json({ error: 'Domain is required' }, { status: 400 });
+    }
 
-    if (!CPANEL_HOSTNAME || !CPANEL_USERNAME || !CPANEL_API_TOKEN || !selectedDomain) {
+    if (!CPANEL_HOSTNAME || !CPANEL_USERNAME || !CPANEL_API_TOKEN) {
       return NextResponse.json({ error: 'Server configuration error (missing environment variables)' }, { status: 500 });
     }
 
@@ -28,7 +29,7 @@ export async function POST(request: Request) {
     const url = new URL(`${baseUrl}/execute/Email/add_pop`);
     url.searchParams.append('email', emailPrefix);
     url.searchParams.append('password', password);
-    url.searchParams.append('domain', selectedDomain);
+    url.searchParams.append('domain', domain);
     url.searchParams.append('quota', quota.toString());
 
     // Call cPanel API
@@ -48,7 +49,7 @@ export async function POST(request: Request) {
     if (data.status === 1) {
       return NextResponse.json({ 
         message: 'Email account created successfully',
-        email: `${emailPrefix}@${selectedDomain}`
+        email: `${emailPrefix}@${domain}`
       });
     }
 
